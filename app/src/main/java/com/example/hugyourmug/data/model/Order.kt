@@ -9,5 +9,6 @@ data class Order(
     val bringChange: Boolean = false,
     val total: Double = 0.0,
     val timestamp: Long = 0L,
-    val mood: String = ""
+    val mood: String = "",
+
 )

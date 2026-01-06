@@ -104,6 +104,12 @@ class CheckoutFragment : Fragment() {
             bringChange = bringChange,
             mood = mood
         )
+        Toast.makeText(
+            requireContext(),
+            "Your order is confirmed ☕",
+            Toast.LENGTH_LONG
+        ).show()
+
     }
 
     override fun onDestroyView() {

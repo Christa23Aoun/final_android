@@ -56,7 +56,10 @@ dependencies {
     implementation("com.google.firebase:firebase-auth-ktx")
     implementation("com.google.firebase:firebase-firestore-ktx")
 
+    implementation("com.google.firebase:firebase-messaging-ktx")
+
     implementation("com.google.android.gms:play-services-maps:18.2.0")
+    implementation(libs.work.runtime)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
