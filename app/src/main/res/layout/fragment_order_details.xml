@@ -1,63 +1,86 @@
-<?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="#000000"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#000000"
     android:padding="20dp">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
+        <!-- DATE -->
         <TextView
             android:id="@+id/txtOrderDate"
-            android:text="Dec 05, 2025 • 10:22 AM"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:textColor="#F5D0A9"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:layout_marginBottom="12dp"/>
+            android:layout_marginBottom="12dp" />
 
+        <!-- CUSTOMER -->
         <TextView
             android:id="@+id/txtFullName"
-            android:text="Customer Name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
-            android:layout_marginBottom="6dp"/>
+            android:layout_marginBottom="4dp" />
 
+        <!-- TYPE -->
         <TextView
             android:id="@+id/txtOrderType"
-            android:text="Delivery"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"
-            android:layout_marginBottom="6dp"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#AAAAAA"
+            android:textSize="14sp"
+            android:layout_marginBottom="12dp" />
 
+        <!-- ADDRESS (delivery only) -->
         <TextView
             android:id="@+id/txtAddress"
-            android:text="Address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:textColor="#AAAAAA"
             android:textSize="14sp"
-            android:layout_marginBottom="6dp"/>
+            android:layout_marginBottom="6dp"
+            android:visibility="gone" />
 
+        <!-- CHANGE (delivery only) -->
         <TextView
             android:id="@+id/txtBringChange"
-            android:text="Bring Change: No"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:textColor="#AAAAAA"
             android:textSize="14sp"
-            android:layout_marginBottom="25dp"/>
+            android:layout_marginBottom="16dp"
+            android:visibility="gone" />
 
+        <!-- ITEMS -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerOrderItems"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
+
+        <!-- TOTAL -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total"
+            android:textColor="#AAAAAA"
+            android:textSize="14sp"
+            android:layout_marginTop="20dp" />
 
         <TextView
             android:id="@+id/txtTotalPrice"
-            android:text="$16.90"
-            android:textSize="20sp"
-            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:textColor="#F5D0A9"
-            android:layout_marginTop="25dp"/>
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginTop="4dp" />
+
     </LinearLayout>
 
 </ScrollView>

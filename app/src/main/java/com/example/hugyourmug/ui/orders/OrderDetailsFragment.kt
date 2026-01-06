@@ -45,11 +45,17 @@ class OrderDetailsFragment : Fragment() {
                 binding.txtOrderDate.text = sdf.format(Date(order.timestamp))
                 binding.txtFullName.text = order.fullName
                 binding.txtOrderType.text = if (order.isDelivery) "Delivery" else "Pickup"
-                binding.txtAddress.text = if (order.isDelivery) order.address else "N/A"
-                binding.txtBringChange.text =
-                    if (order.isDelivery) {
-                        if (order.bringChange) "Yes" else "No"
-                    } else "N/A"
+                if (order.isDelivery) {
+                    binding.txtAddress.visibility = View.VISIBLE
+                    binding.txtBringChange.visibility = View.VISIBLE
+
+                    binding.txtAddress.text = order.address
+                    binding.txtBringChange.text =
+                        if (order.bringChange) "Bring change: Yes" else "Bring change: No"
+                } else {
+                    binding.txtAddress.visibility = View.GONE
+                    binding.txtBringChange.visibility = View.GONE
+                }
                 binding.txtTotalPrice.text = "$%.2f".format(order.total)
             }
         }
