@@ -3,8 +3,8 @@ package com.example.hugyourmug
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupWithNavController
 import com.example.hugyourmug.data.repository.MenuSeeder
 import com.example.hugyourmug.databinding.ActivityMainBinding
 import kotlinx.coroutines.launch
@@ -24,9 +24,17 @@ class MainActivity : AppCompatActivity() {
                     as NavHostFragment
 
         val navController = navHostFragment.navController
-        binding.bottomNavigation.setupWithNavController(navController)
 
-        // ✅ CORRECT FUNCTION CALL
+        val navOptions = NavOptions.Builder()
+            .setPopUpTo(navController.graph.startDestinationId, false)
+            .setLaunchSingleTop(true)
+            .build()
+
+        binding.bottomNavigation.setOnItemSelectedListener { item ->
+            navController.navigate(item.itemId, null, navOptions)
+            true
+        }
+
         lifecycleScope.launch {
             MenuSeeder().seedOrUpdateMoods()
         }

@@ -27,7 +27,7 @@
         android:title="Profile" />
 
     <item
-        android:id="@+id/nav_maps"
+        android:id="@+id/navigation_maps"
         android:icon="@drawable/ic_map"
         android:title="Map" />
 

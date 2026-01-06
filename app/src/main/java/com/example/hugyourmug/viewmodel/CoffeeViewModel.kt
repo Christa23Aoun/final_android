@@ -35,10 +35,8 @@ class CoffeeViewModel : ViewModel() {
     fun loadSuggestedCoffees(rawMood: String) {
         viewModelScope.launch {
 
-            // ✅ Normalize mood
             val mood = rawMood.lowercase().trim()
 
-            // ✅ Always fetch coffees (do NOT rely on LiveData timing)
             val coffees = coffeeRepository.getAllCoffees()
             if (coffees.isEmpty()) {
                 _suggestedCoffees.value = emptyList()
@@ -52,19 +50,26 @@ class CoffeeViewModel : ViewModel() {
 
             val orders = orderRepository.getOrdersForCurrentUser()
 
-            val orderedCoffeeIdsForMood =
-                orders.filter { it.mood.lowercase() == mood }
-                    .flatMap { order ->
-                        orderRepository.getOrderItems(order.id).map { it.coffeeId }
-                    }
-                    .toSet()
+            val orderedIdsForMood = orders
+                .filter { it.mood.lowercase() == mood }
+                .flatMap { order ->
+                    orderRepository.getOrderItems(order.id).map { it.coffeeId }
+                }
+                .toSet()
+
+            val orderedIdsAllTime = orders
+                .flatMap { order ->
+                    orderRepository.getOrderItems(order.id).map { it.coffeeId }
+                }
+                .toSet()
 
             val ranked = coffees.map { coffee ->
                 var score = 0
 
-                if (favoriteIds.contains(coffee.id)) score += 3
-                if (orderedCoffeeIdsForMood.contains(coffee.id)) score += 2
-                if (coffee.moods.any { it.lowercase() == mood }) score += 1
+                if (coffee.moods.any { it.lowercase() == mood }) score += 5
+                if (orderedIdsAllTime.contains(coffee.id)) score += 3
+                if (orderedIdsForMood.contains(coffee.id)) score += 5
+                if (favoriteIds.contains(coffee.id)) score += 7
 
                 coffee to score
             }
@@ -72,12 +77,11 @@ class CoffeeViewModel : ViewModel() {
             val result = ranked
                 .sortedByDescending { it.second }
                 .map { it.first }
-                .take(3)
+                .take(5)
 
-            // ✅ Always show something
             _suggestedCoffees.value =
                 if (result.isNotEmpty()) result
-                else coffees.shuffled().take(3)
+                else coffees.shuffled().take(5)
         }
     }
 }
