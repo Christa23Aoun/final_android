@@ -6,21 +6,18 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/navigation_home">
 
-    <!-- HOME -->
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.example.hugyourmug.ui.home.HomeFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home" />
 
-    <!-- MENU -->
     <fragment
         android:id="@+id/navigation_menu"
         android:name="com.example.hugyourmug.ui.menu.MenuFragment"
         android:label="Menu"
         tools:layout="@layout/fragment_menu" />
 
-    <!-- CART -->
     <fragment
         android:id="@+id/navigation_cart"
         android:name="com.example.hugyourmug.ui.cart.CartFragment"
@@ -32,21 +29,18 @@
             app:destination="@id/checkoutFragment" />
     </fragment>
 
-    <!-- FAVORITES -->
     <fragment
         android:id="@+id/navigation_favorites"
         android:name="com.example.hugyourmug.ui.favorites.FavoritesFragment"
         android:label="Favorites"
         tools:layout="@layout/fragment_favorites" />
 
-    <!-- MAPS -->
     <fragment
-        android:id="@+id/nav_maps"
+        android:id="@+id/navigation_maps"
         android:name="com.example.hugyourmug.ui.maps.MapsFragment"
         android:label="Map"
         tools:layout="@layout/fragment_maps" />
 
-    <!-- PROFILE -->
     <fragment
         android:id="@+id/navigation_profile"
         android:name="com.example.hugyourmug.ui.profile.ProfileFragment"
@@ -64,14 +58,12 @@
         android:label="Choose Your Mood"
         tools:layout="@layout/fragment_mood_selection" />
 
-    <!-- CHECKOUT -->
     <fragment
         android:id="@+id/checkoutFragment"
         android:name="com.example.hugyourmug.ui.checkout.CheckoutFragment"
         android:label="Checkout"
         tools:layout="@layout/fragment_checkout" />
 
-    <!-- ORDER HISTORY -->
     <fragment
         android:id="@+id/orderHistoryFragment"
         android:name="com.example.hugyourmug.ui.orders.OrderHistoryFragment"
@@ -83,7 +75,6 @@
             app:destination="@id/orderDetailsFragment" />
     </fragment>
 
-    <!-- ORDER DETAILS -->
     <fragment
         android:id="@+id/orderDetailsFragment"
         android:name="com.example.hugyourmug.ui.orders.OrderDetailsFragment"
@@ -95,11 +86,13 @@
             app:argType="string"
             app:nullable="false" />
     </fragment>
+
     <fragment
         android:id="@+id/navigation_mood_result"
         android:name="com.example.hugyourmug.ui.mood.MoodResultFragment"
         android:label="Mood Result"
         tools:layout="@layout/fragment_mood_result">
+
         <argument
             android:name="mood"
             app:argType="string" />

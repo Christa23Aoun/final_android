@@ -48,8 +48,6 @@ class CheckoutViewModel : ViewModel() {
             val total = subtotal + tax + deliveryFee
 
             val order = Order(
-                id = "",
-                userId = "",
                 fullName = fullName,
                 address = address,
                 isDelivery = isDelivery,
@@ -61,14 +59,11 @@ class CheckoutViewModel : ViewModel() {
 
             val orderItems = items.map {
                 OrderItem(
-                    id = "",
-                    orderId = "",
                     coffeeId = it.coffeeId,
                     name = it.name,
                     price = it.price,
                     quantity = it.quantity
                 )
-
             }
 
             orderRepository.placeOrder(order, orderItems)

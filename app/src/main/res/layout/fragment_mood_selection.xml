@@ -27,48 +27,11 @@
             android:textColor="@color/coffee_brown"
             android:paddingBottom="24dp" />
 
-        <Button
-            android:id="@+id/moodHappy"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerMoods"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="😊 Happy"
-            android:backgroundTint="#F4A261"
-            android:textColor="@android:color/white"
-            android:textStyle="bold"
-            android:padding="14dp"
-            android:layout_marginBottom="12dp" />
-
-        <Button
-            android:id="@+id/moodTired"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="😴 Tired"
-            android:backgroundTint="#6D6875"
-            android:textColor="@android:color/white"
-            android:textStyle="bold"
-            android:padding="14dp"
-            android:layout_marginBottom="12dp" />
-
-        <Button
-            android:id="@+id/moodStudy"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="📚 Study Time"
-            android:backgroundTint="#3A86FF"
-            android:textColor="@android:color/white"
-            android:textStyle="bold"
-            android:padding="14dp"
-            android:layout_marginBottom="12dp" />
-
-        <Button
-            android:id="@+id/moodRelax"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="😌 Relaxed"
-            android:backgroundTint="#2A9D8F"
-            android:textColor="@android:color/white"
-            android:textStyle="bold"
-            android:padding="14dp" />
+            android:nestedScrollingEnabled="false" />
 
     </LinearLayout>
 

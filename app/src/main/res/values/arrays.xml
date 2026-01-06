@@ -4,17 +4,10 @@
         <item>happy</item>
         <item>sad</item>
         <item>tired</item>
-        <item>study</item>
         <item>stressed</item>
-        <item>relaxed</item>
         <item>bored</item>
         <item>late_night</item>
         <item>focused</item>
-        <item>broken</item>
         <item>motivated</item>
-        <item>cozy</item>
-        <item>social</item>
-        <item>cold_weather</item>
-        <item>hot_weather</item>
     </string-array>
 </resources>
