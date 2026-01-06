@@ -13,6 +13,7 @@ class OrderDetailsItemsAdapter :
     RecyclerView.Adapter<OrderDetailsItemsAdapter.ItemViewHolder>() {
 
     private var items: List<OrderItem> = emptyList()
+    private var highlightFreeItem = false
 
     inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val txtName: TextView = itemView.findViewById(R.id.txtItemName)
@@ -28,25 +29,34 @@ class OrderDetailsItemsAdapter :
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = items[position]
+
         holder.txtName.text = item.name
         holder.txtPrice.text = "$%.2f".format(item.price)
         holder.txtQuantity.text = "x${item.quantity}"
+
+        if (highlightFreeItem && item == items.maxByOrNull { it.price }) {
+            holder.txtName.setTextColor(holder.itemView.context.getColor(R.color.coffee_brown))
+            holder.txtPrice.text = "FREE"
+        } else {
+            holder.txtName.setTextColor(holder.itemView.context.getColor(android.R.color.black))
+        }
     }
 
     override fun getItemCount() = items.size
+
+    fun setFreeItemValue(enabled: Boolean) {
+        highlightFreeItem = enabled
+        notifyDataSetChanged()
+    }
 
     fun updateList(newItems: List<OrderItem>) {
         val diffCallback = object : DiffUtil.Callback() {
             override fun getOldListSize() = items.size
             override fun getNewListSize() = newItems.size
-
-            override fun areItemsTheSame(oldPos: Int, newPos: Int): Boolean {
-                return items[oldPos].id == newItems[newPos].id
-            }
-
-            override fun areContentsTheSame(oldPos: Int, newPos: Int): Boolean {
-                return items[oldPos] == newItems[newPos]
-            }
+            override fun areItemsTheSame(oldPos: Int, newPos: Int) =
+                items[oldPos].id == newItems[newPos].id
+            override fun areContentsTheSame(oldPos: Int, newPos: Int) =
+                items[oldPos] == newItems[newPos]
         }
 
         val diffResult = DiffUtil.calculateDiff(diffCallback)

@@ -9,7 +9,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- DATE -->
         <TextView
             android:id="@+id/txtOrderDate"
             android:layout_width="wrap_content"
@@ -19,7 +18,6 @@
             android:textStyle="bold"
             android:layout_marginBottom="12dp" />
 
-        <!-- CUSTOMER -->
         <TextView
             android:id="@+id/txtFullName"
             android:layout_width="wrap_content"
@@ -28,7 +26,6 @@
             android:textSize="16sp"
             android:layout_marginBottom="4dp" />
 
-        <!-- TYPE -->
         <TextView
             android:id="@+id/txtOrderType"
             android:layout_width="wrap_content"
@@ -37,7 +34,6 @@
             android:textSize="14sp"
             android:layout_marginBottom="12dp" />
 
-        <!-- ADDRESS (delivery only) -->
         <TextView
             android:id="@+id/txtAddress"
             android:layout_width="wrap_content"
@@ -47,7 +43,6 @@
             android:layout_marginBottom="6dp"
             android:visibility="gone" />
 
-        <!-- CHANGE (delivery only) -->
         <TextView
             android:id="@+id/txtBringChange"
             android:layout_width="wrap_content"
@@ -57,13 +52,44 @@
             android:layout_marginBottom="16dp"
             android:visibility="gone" />
 
-        <!-- ITEMS -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerOrderItems"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <!-- TOTAL -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Loyalty"
+            android:textColor="#AAAAAA"
+            android:textSize="14sp"
+            android:layout_marginTop="20dp" />
+
+        <TextView
+            android:id="@+id/txtPointsEarned"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:layout_marginTop="4dp" />
+
+        <TextView
+            android:id="@+id/txtLoyaltyProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#AAAAAA"
+            android:textSize="14sp"
+            android:layout_marginTop="2dp"
+            android:text="Loyalty: 0 / 5" />
+
+        <TextView
+            android:id="@+id/txtFreeItemUsed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#F5D0A9"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

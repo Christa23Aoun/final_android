@@ -33,6 +33,7 @@ class ProfileFragment : Fragment() {
         viewModel.user.observe(viewLifecycleOwner) { user ->
             binding.txtProfileName.text = "${user.firstName} ${user.lastName}"
             binding.txtProfileEmail.text = user.email
+            binding.txtLoyaltyPoints.text = "Loyalty points: ${user.loyaltyPoints} / 5"
         }
 
         binding.btnMyOrders.setOnClickListener {

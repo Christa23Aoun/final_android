@@ -33,10 +33,8 @@ class OrderDetailsFragment : Fragment() {
 
         val orderId = arguments?.getString("orderId") ?: return
 
-        binding.recyclerOrderItems.layoutManager =
-            LinearLayoutManager(requireContext())
-
         val adapter = OrderDetailsItemsAdapter()
+        binding.recyclerOrderItems.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerOrderItems.adapter = adapter
 
         viewModel.order.observe(viewLifecycleOwner) { order ->
@@ -45,10 +43,10 @@ class OrderDetailsFragment : Fragment() {
                 binding.txtOrderDate.text = sdf.format(Date(order.timestamp))
                 binding.txtFullName.text = order.fullName
                 binding.txtOrderType.text = if (order.isDelivery) "Delivery" else "Pickup"
+
                 if (order.isDelivery) {
                     binding.txtAddress.visibility = View.VISIBLE
                     binding.txtBringChange.visibility = View.VISIBLE
-
                     binding.txtAddress.text = order.address
                     binding.txtBringChange.text =
                         if (order.bringChange) "Bring change: Yes" else "Bring change: No"
@@ -56,7 +54,21 @@ class OrderDetailsFragment : Fragment() {
                     binding.txtAddress.visibility = View.GONE
                     binding.txtBringChange.visibility = View.GONE
                 }
+
+                val progress = if (order.freeItemUsed) 0 else order.pointsEarned
+                binding.txtPointsEarned.text = "Points earned: ${order.pointsEarned}"
+                binding.txtLoyaltyProgress.text = "Loyalty: $progress / 5"
+
+                if (order.freeItemUsed) {
+                    binding.txtFreeItemUsed.visibility = View.VISIBLE
+                    binding.txtFreeItemUsed.text =
+                        "🎁 Free drink applied: -$%.2f".format(order.freeItemValue)
+                } else {
+                    binding.txtFreeItemUsed.visibility = View.GONE
+                }
+
                 binding.txtTotalPrice.text = "$%.2f".format(order.total)
+                adapter.setFreeItemValue(order.freeItemUsed)
             }
         }
 

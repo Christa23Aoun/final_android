@@ -12,6 +12,7 @@ class OrderRepository {
     private val firestore = FirebaseFirestore.getInstance()
     private val auth = FirebaseAuth.getInstance()
     private val ordersCollection = firestore.collection("orders")
+    private val usersCollection = firestore.collection("users")
 
     private fun currentUserId(): String {
         return auth.currentUser?.uid
@@ -20,15 +21,44 @@ class OrderRepository {
 
     suspend fun placeOrder(order: Order, items: List<OrderItem>) {
         val userId = currentUserId()
-        val orderWithUser = order.copy(userId = userId)
+        val userRef = usersCollection.document(userId)
+        val userSnap = userRef.get().await()
+
+        val currentPoints = userSnap.getLong("loyaltyPoints")?.toInt() ?: 0
+        val pointsEarned = items.size
+
+        val totalBeforeDiscount = items.sumOf { it.price * it.quantity }
+
+        var freeItemUsed = false
+        var freeItemValue = 0.0
+        var remainingPoints = currentPoints + pointsEarned
+
+        if (remainingPoints >= 5) {
+            val mostExpensiveItem = items.maxByOrNull { it.price }
+            if (mostExpensiveItem != null) {
+                freeItemValue = mostExpensiveItem.price
+                freeItemUsed = true
+                remainingPoints = 0
+            }
+        }
+
+        val finalTotal = (totalBeforeDiscount - freeItemValue).coerceAtLeast(0.0)
+
+        userRef.update("loyaltyPoints", remainingPoints).await()
+
+        val orderWithUser = order.copy(
+            userId = userId,
+            total = finalTotal,
+            pointsEarned = pointsEarned,
+            freeItemUsed = freeItemUsed,
+            freeItemValue = freeItemValue
+        )
 
         val orderRef = ordersCollection.add(orderWithUser).await()
         val itemsCollection = orderRef.collection("items")
 
         items.forEach { item ->
-            itemsCollection.add(
-                item.copy(orderId = orderRef.id)
-            ).await()
+            itemsCollection.add(item.copy(orderId = orderRef.id)).await()
         }
     }
 
