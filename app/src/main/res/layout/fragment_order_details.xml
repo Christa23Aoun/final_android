@@ -79,8 +79,7 @@
             android:layout_height="wrap_content"
             android:textColor="#AAAAAA"
             android:textSize="14sp"
-            android:layout_marginTop="2dp"
-            android:text="Loyalty: 0 / 5" />
+            android:layout_marginTop="2dp" />
 
         <TextView
             android:id="@+id/txtFreeItemUsed"
@@ -88,6 +87,38 @@
             android:layout_height="wrap_content"
             android:textColor="#F5D0A9"
             android:textSize="14sp"
+            android:layout_marginTop="4dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Payment details"
+            android:textColor="#AAAAAA"
+            android:textSize="14sp"
+            android:layout_marginTop="20dp" />
+
+        <TextView
+            android:id="@+id/txtSubtotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:layout_marginTop="6dp" />
+
+        <TextView
+            android:id="@+id/txtTax"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:layout_marginTop="4dp" />
+
+        <TextView
+            android:id="@+id/txtDeliveryFee"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
             android:layout_marginTop="4dp" />
 
         <TextView

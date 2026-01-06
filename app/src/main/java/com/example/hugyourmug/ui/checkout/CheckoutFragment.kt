@@ -33,12 +33,8 @@ class CheckoutFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val moods = resources.getStringArray(R.array.moods_array).toList()
-        val moodAdapter = ArrayAdapter(
-            requireContext(),
-            android.R.layout.simple_spinner_dropdown_item,
-            moods
-        )
-        binding.spnMood.adapter = moodAdapter
+        binding.spnMood.adapter =
+            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, moods)
 
         binding.recyclerCheckoutItems.layoutManager = LinearLayoutManager(requireContext())
         val adapter = CheckoutItemsAdapter()
@@ -51,13 +47,16 @@ class CheckoutFragment : Fragment() {
 
         viewModel.orderPlaced.observe(viewLifecycleOwner) { success ->
             if (success) {
-                Toast.makeText(requireContext(), "Order placed successfully ☕", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    requireContext(),
+                    "Order placed successfully ☕",
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
 
         binding.rbPickup.setOnClickListener { updateTotals() }
         binding.rbDelivery.setOnClickListener { updateTotals() }
-
         binding.btnPlaceOrder.setOnClickListener { placeOrder() }
 
         viewModel.loadCart()
@@ -65,8 +64,8 @@ class CheckoutFragment : Fragment() {
 
     private fun updateTotals() {
         val subtotal = viewModel.subtotal()
-        val tax = subtotal * 0.11
-        val deliveryFee = if (binding.rbDelivery.isChecked) 2.0 else 0.0
+        val tax = subtotal * 0.10
+        val deliveryFee = if (binding.rbDelivery.isChecked) 1.0 else 0.0
         val total = subtotal + tax + deliveryFee
 
         binding.txtSubtotalValue.text = "$%.2f".format(subtotal)
@@ -97,19 +96,7 @@ class CheckoutFragment : Fragment() {
             return
         }
 
-        viewModel.placeOrder(
-            fullName = fullName,
-            address = address,
-            isDelivery = isDelivery,
-            bringChange = bringChange,
-            mood = mood
-        )
-        Toast.makeText(
-            requireContext(),
-            "Your order is confirmed ☕",
-            Toast.LENGTH_LONG
-        ).show()
-
+        viewModel.placeOrder(fullName, address, isDelivery, bringChange, mood)
     }
 
     override fun onDestroyView() {

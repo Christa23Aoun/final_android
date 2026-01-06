@@ -13,7 +13,7 @@ class OrderDetailsItemsAdapter :
     RecyclerView.Adapter<OrderDetailsItemsAdapter.ItemViewHolder>() {
 
     private var items: List<OrderItem> = emptyList()
-    private var highlightFreeItem = false
+    private var freeItemId: String? = null
 
     inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val txtName: TextView = itemView.findViewById(R.id.txtItemName)
@@ -31,21 +31,27 @@ class OrderDetailsItemsAdapter :
         val item = items[position]
 
         holder.txtName.text = item.name
-        holder.txtPrice.text = "$%.2f".format(item.price)
         holder.txtQuantity.text = "x${item.quantity}"
 
-        if (highlightFreeItem && item == items.maxByOrNull { it.price }) {
-            holder.txtName.setTextColor(holder.itemView.context.getColor(R.color.coffee_brown))
+        holder.txtName.setTextColor(holder.itemView.context.getColor(android.R.color.white))
+        holder.txtPrice.setTextColor(holder.itemView.context.getColor(R.color.coffee_brown))
+
+        if (item.id == freeItemId) {
             holder.txtPrice.text = "FREE"
+            holder.txtName.setTextColor(holder.itemView.context.getColor(R.color.coffee_brown))
         } else {
-            holder.txtName.setTextColor(holder.itemView.context.getColor(android.R.color.black))
+            holder.txtPrice.text = "$%.2f".format(item.price)
         }
     }
 
     override fun getItemCount() = items.size
 
     fun setFreeItemValue(enabled: Boolean) {
-        highlightFreeItem = enabled
+        freeItemId = if (enabled) {
+            items.maxByOrNull { it.price }?.id
+        } else {
+            null
+        }
         notifyDataSetChanged()
     }
 

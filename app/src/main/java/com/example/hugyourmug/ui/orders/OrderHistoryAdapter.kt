@@ -36,9 +36,11 @@ class OrderHistoryAdapter(
         holder.txtDate.text = sdf.format(Date(order.timestamp))
 
         holder.txtType.text =
-            if (order.isDelivery)
-                "Delivery • Bring change: ${if (order.bringChange) "Yes" else "No"}"
-            else "Pickup"
+            if (order.delivery) {
+                "Delivery • Fee $${String.format("%.2f", order.deliveryFee)}"
+            } else {
+                "Pickup"
+            }
 
         holder.txtTotal.text = "$${String.format("%.2f", order.total)}"
 

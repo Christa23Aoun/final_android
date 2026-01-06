@@ -1,5 +1,6 @@
 package com.example.hugyourmug.ui.profile
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +10,9 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.hugyourmug.R
 import com.example.hugyourmug.databinding.FragmentProfileBinding
+import com.example.hugyourmug.ui.auth.WelcomeActivity
 import com.example.hugyourmug.viewmodel.ProfileViewModel
+import com.google.firebase.auth.FirebaseAuth
 
 class ProfileFragment : Fragment() {
 
@@ -40,6 +43,16 @@ class ProfileFragment : Fragment() {
             findNavController().navigate(
                 R.id.action_profile_to_orderHistory
             )
+        }
+
+        binding.btnLogout.setOnClickListener {
+            FirebaseAuth.getInstance().signOut()
+
+            val intent = Intent(requireContext(), WelcomeActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+
+            requireActivity().finish()
         }
 
         viewModel.loadUser()

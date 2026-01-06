@@ -31,7 +31,15 @@ class FavoriteRepository {
         if (existing.documents.isNotEmpty()) {
             existing.documents.first().reference.delete().await()
         } else {
-            favRef().add(item.copy(id = "")).await()
+            val favorite = FavoriteItem(
+                id = "",
+                userId = auth.currentUser?.uid ?: "",
+                coffeeId = item.coffeeId,
+                name = item.name,
+                price = item.price,
+                imageName = item.imageName
+            )
+            favRef().add(favorite).await()
         }
     }
 

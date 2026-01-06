@@ -8,6 +8,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import androidx.work.ExistingWorkPolicy
@@ -41,7 +42,22 @@ class MainActivity : AppCompatActivity() {
                     as NavHostFragment
 
         val navController = navHostFragment.navController
+
         binding.bottomNavigation.setupWithNavController(navController)
+
+        binding.bottomNavigation.setOnItemSelectedListener { item ->
+            val navOptions = NavOptions.Builder()
+                .setLaunchSingleTop(true)
+                .setRestoreState(false)
+                .setPopUpTo(
+                    navController.graph.startDestinationId,
+                    false
+                )
+                .build()
+
+            navController.navigate(item.itemId, null, navOptions)
+            true
+        }
 
         lifecycleScope.launch {
             MenuSeeder().seedOrUpdateMoods()

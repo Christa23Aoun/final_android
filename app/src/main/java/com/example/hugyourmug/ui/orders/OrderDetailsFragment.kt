@@ -42,9 +42,9 @@ class OrderDetailsFragment : Fragment() {
                 val sdf = SimpleDateFormat("MMM dd, yyyy • hh:mm a", Locale.getDefault())
                 binding.txtOrderDate.text = sdf.format(Date(order.timestamp))
                 binding.txtFullName.text = order.fullName
-                binding.txtOrderType.text = if (order.isDelivery) "Delivery" else "Pickup"
+                binding.txtOrderType.text = if (order.delivery) "Delivery" else "Pickup"
 
-                if (order.isDelivery) {
+                if (order.delivery) {
                     binding.txtAddress.visibility = View.VISIBLE
                     binding.txtBringChange.visibility = View.VISIBLE
                     binding.txtAddress.text = order.address
@@ -55,9 +55,8 @@ class OrderDetailsFragment : Fragment() {
                     binding.txtBringChange.visibility = View.GONE
                 }
 
-                val progress = if (order.freeItemUsed) 0 else order.pointsEarned
                 binding.txtPointsEarned.text = "Points earned: ${order.pointsEarned}"
-                binding.txtLoyaltyProgress.text = "Loyalty: $progress / 5"
+                binding.txtLoyaltyProgress.text = "Loyalty: ${order.pointsEarned} / 5"
 
                 if (order.freeItemUsed) {
                     binding.txtFreeItemUsed.visibility = View.VISIBLE
@@ -66,6 +65,11 @@ class OrderDetailsFragment : Fragment() {
                 } else {
                     binding.txtFreeItemUsed.visibility = View.GONE
                 }
+
+                binding.txtSubtotal.text = "Subtotal: $%.2f".format(order.subtotal)
+                binding.txtTax.text = "Tax: $%.2f".format(order.tax)
+                binding.txtDeliveryFee.text =
+                    if (order.delivery) "Delivery fee: $%.2f".format(order.deliveryFee) else "Delivery fee: $0.00"
 
                 binding.txtTotalPrice.text = "$%.2f".format(order.total)
                 adapter.setFreeItemValue(order.freeItemUsed)

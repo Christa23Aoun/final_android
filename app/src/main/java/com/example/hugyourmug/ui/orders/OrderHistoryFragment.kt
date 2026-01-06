@@ -18,6 +18,7 @@ class OrderHistoryFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: OrdersViewModel by viewModels()
+    private lateinit var adapter: OrderHistoryAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,10 +32,7 @@ class OrderHistoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.recyclerOrderHistory.layoutManager =
-            LinearLayoutManager(requireContext())
-
-        val adapter = OrderHistoryAdapter { order ->
+        adapter = OrderHistoryAdapter { order ->
             val bundle = Bundle().apply {
                 putString("orderId", order.id)
             }
@@ -44,6 +42,8 @@ class OrderHistoryFragment : Fragment() {
             )
         }
 
+        binding.recyclerOrderHistory.layoutManager =
+            LinearLayoutManager(requireContext())
         binding.recyclerOrderHistory.adapter = adapter
 
         viewModel.orders.observe(viewLifecycleOwner) { orders ->

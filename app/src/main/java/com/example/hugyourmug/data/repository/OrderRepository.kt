@@ -25,9 +25,11 @@ class OrderRepository {
         val userSnap = userRef.get().await()
 
         val currentPoints = userSnap.getLong("loyaltyPoints")?.toInt() ?: 0
-        val pointsEarned = items.size
+        val pointsEarned = items.sumOf { it.quantity }
 
-        val totalBeforeDiscount = items.sumOf { it.price * it.quantity }
+        val subtotal = items.sumOf { it.price * it.quantity }
+        val tax = subtotal * 0.1
+        val deliveryFee = if (order.delivery) 1.0 else 0.0
 
         var freeItemUsed = false
         var freeItemValue = 0.0
@@ -38,23 +40,27 @@ class OrderRepository {
             if (mostExpensiveItem != null) {
                 freeItemValue = mostExpensiveItem.price
                 freeItemUsed = true
-                remainingPoints = 0
+                remainingPoints = remainingPoints - 5
             }
         }
 
-        val finalTotal = (totalBeforeDiscount - freeItemValue).coerceAtLeast(0.0)
+        val total = (subtotal + tax + deliveryFee - freeItemValue).coerceAtLeast(0.0)
 
         userRef.update("loyaltyPoints", remainingPoints).await()
 
-        val orderWithUser = order.copy(
+        val finalOrder = order.copy(
             userId = userId,
-            total = finalTotal,
+            subtotal = subtotal,
+            tax = tax,
+            deliveryFee = deliveryFee,
+            total = total,
             pointsEarned = pointsEarned,
             freeItemUsed = freeItemUsed,
-            freeItemValue = freeItemValue
+            freeItemValue = freeItemValue,
+            timestamp = System.currentTimeMillis()
         )
 
-        val orderRef = ordersCollection.add(orderWithUser).await()
+        val orderRef = ordersCollection.add(finalOrder).await()
         val itemsCollection = orderRef.collection("items")
 
         items.forEach { item ->
@@ -92,6 +98,4 @@ class OrderRepository {
             doc.toObject(OrderItem::class.java)?.copy(id = doc.id)
         }
     }
-
-
 }
