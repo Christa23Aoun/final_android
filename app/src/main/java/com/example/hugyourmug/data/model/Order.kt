@@ -8,5 +8,6 @@ data class Order(
     val isDelivery: Boolean = false,
     val bringChange: Boolean = false,
     val total: Double = 0.0,
-    val timestamp: Long = 0L
+    val timestamp: Long = 0L,
+    val mood: String = ""
 )

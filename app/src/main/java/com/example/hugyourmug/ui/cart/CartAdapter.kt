@@ -18,6 +18,7 @@ class CartAdapter(
     private var items: List<CartItem> = emptyList()
 
     inner class CartViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val imgCoffee: ImageView = itemView.findViewById(R.id.imgCartCoffee)
         val txtName: TextView = itemView.findViewById(R.id.txtCartItemName)
         val txtPrice: TextView = itemView.findViewById(R.id.txtCartItemPrice)
         val txtQuantity: TextView = itemView.findViewById(R.id.txtCartQuantity)
@@ -36,8 +37,15 @@ class CartAdapter(
         val item = items[position]
 
         holder.txtName.text = item.name
-        holder.txtPrice.text = "$${item.price}"
+        holder.txtPrice.text = "$%.2f".format(item.price)
         holder.txtQuantity.text = item.quantity.toString()
+
+        val resId = holder.itemView.context.resources.getIdentifier(
+            item.imageName,
+            "drawable",
+            holder.itemView.context.packageName
+        )
+        if (resId != 0) holder.imgCoffee.setImageResource(resId)
 
         holder.btnIncrease.setOnClickListener { onIncrease(item) }
         holder.btnDecrease.setOnClickListener { onDecrease(item) }

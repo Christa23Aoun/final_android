@@ -36,7 +36,8 @@ class CheckoutViewModel : ViewModel() {
         fullName: String,
         address: String,
         isDelivery: Boolean,
-        bringChange: Boolean
+        bringChange: Boolean,
+        mood: String
     ) {
         val items = _cartItems.value ?: return
 
@@ -54,17 +55,20 @@ class CheckoutViewModel : ViewModel() {
                 isDelivery = isDelivery,
                 bringChange = bringChange,
                 total = total,
-                timestamp = System.currentTimeMillis()
+                timestamp = System.currentTimeMillis(),
+                mood = mood
             )
 
             val orderItems = items.map {
                 OrderItem(
                     id = "",
                     orderId = "",
+                    coffeeId = it.coffeeId,
                     name = it.name,
                     price = it.price,
                     quantity = it.quantity
                 )
+
             }
 
             orderRepository.placeOrder(order, orderItems)

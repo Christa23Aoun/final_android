@@ -44,7 +44,7 @@ class FavoritesViewModel : ViewModel() {
                 coffeeId = item.coffeeId,
                 name = item.name,
                 price = item.price,
-                imageName = "",
+                imageName = item.imageName,
                 quantity = 1
             )
             cartRepository.addToCart(cartItem)

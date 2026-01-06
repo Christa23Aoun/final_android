@@ -39,7 +39,7 @@
         android:label="Favorites"
         tools:layout="@layout/fragment_favorites" />
 
-    <!-- ✅ MAPS (TOP-LEVEL DESTINATION – VERY IMPORTANT) -->
+    <!-- MAPS -->
     <fragment
         android:id="@+id/nav_maps"
         android:name="com.example.hugyourmug.ui.maps.MapsFragment"
@@ -57,6 +57,12 @@
             android:id="@+id/action_profile_to_orderHistory"
             app:destination="@id/orderHistoryFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/navigation_mood"
+        android:name="com.example.hugyourmug.ui.mood.MoodSelectionFragment"
+        android:label="Choose Your Mood"
+        tools:layout="@layout/fragment_mood_selection" />
 
     <!-- CHECKOUT -->
     <fragment
@@ -88,6 +94,15 @@
             android:name="orderId"
             app:argType="string"
             app:nullable="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_mood_result"
+        android:name="com.example.hugyourmug.ui.mood.MoodResultFragment"
+        android:label="Mood Result"
+        tools:layout="@layout/fragment_mood_result">
+        <argument
+            android:name="mood"
+            app:argType="string" />
     </fragment>
 
 </navigation>

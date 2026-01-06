@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.hugyourmug.R
 import com.example.hugyourmug.databinding.FragmentCheckoutBinding
 import com.example.hugyourmug.viewmodel.CheckoutViewModel
 
@@ -30,9 +32,15 @@ class CheckoutFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.recyclerCheckoutItems.layoutManager =
-            LinearLayoutManager(requireContext())
+        val moods = resources.getStringArray(R.array.moods_array).toList()
+        val moodAdapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_spinner_dropdown_item,
+            moods
+        )
+        binding.spnMood.adapter = moodAdapter
 
+        binding.recyclerCheckoutItems.layoutManager = LinearLayoutManager(requireContext())
         val adapter = CheckoutItemsAdapter()
         binding.recyclerCheckoutItems.adapter = adapter
 
@@ -43,25 +51,16 @@ class CheckoutFragment : Fragment() {
 
         viewModel.orderPlaced.observe(viewLifecycleOwner) { success ->
             if (success) {
-                Toast.makeText(
-                    requireContext(),
-                    "Order placed successfully ☕",
-                    Toast.LENGTH_LONG
-                ).show()
+                Toast.makeText(requireContext(), "Order placed successfully ☕", Toast.LENGTH_LONG).show()
             }
         }
 
-        setupListeners()
-        viewModel.loadCart()
-    }
-
-    private fun setupListeners() {
         binding.rbPickup.setOnClickListener { updateTotals() }
         binding.rbDelivery.setOnClickListener { updateTotals() }
 
-        binding.btnPlaceOrder.setOnClickListener {
-            placeOrder()
-        }
+        binding.btnPlaceOrder.setOnClickListener { placeOrder() }
+
+        viewModel.loadCart()
     }
 
     private fun updateTotals() {
@@ -81,6 +80,7 @@ class CheckoutFragment : Fragment() {
         val address = binding.edtAddress.text.toString().trim()
         val isDelivery = binding.rbDelivery.isChecked
         val bringChange = binding.chkBringChange.isChecked
+        val mood = binding.spnMood.selectedItem?.toString()?.trim().orEmpty()
 
         if (fullName.isEmpty()) {
             Toast.makeText(requireContext(), "Enter your full name", Toast.LENGTH_SHORT).show()
@@ -92,11 +92,17 @@ class CheckoutFragment : Fragment() {
             return
         }
 
+        if (mood.isEmpty()) {
+            Toast.makeText(requireContext(), "Select a mood ☕", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         viewModel.placeOrder(
             fullName = fullName,
             address = address,
             isDelivery = isDelivery,
-            bringChange = bringChange
+            bringChange = bringChange,
+            mood = mood
         )
     }
 

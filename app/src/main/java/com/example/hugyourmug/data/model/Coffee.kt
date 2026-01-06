@@ -6,5 +6,5 @@ data class Coffee(
     val smallPrice: Double = 0.0,
     val largePrice: Double = 0.0,
     val imageName: String = "",
-    val tag: String = ""
+    val moods: List<String> = emptyList()
 )

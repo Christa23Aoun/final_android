@@ -18,8 +18,7 @@ class FavoriteRepository {
     suspend fun getFavorites(): List<FavoriteItem> {
         val snapshot = favRef().get().await()
         return snapshot.documents.mapNotNull { doc ->
-            val item = doc.toObject(FavoriteItem::class.java)
-            item?.copy(id = doc.id)
+            doc.toObject(FavoriteItem::class.java)?.copy(id = doc.id)
         }
     }
 

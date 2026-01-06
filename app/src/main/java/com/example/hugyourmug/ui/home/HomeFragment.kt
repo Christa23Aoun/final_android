@@ -27,15 +27,18 @@ class HomeFragment : Fragment() {
             findNavController().navigate(R.id.navigation_profile)
         }
 
+        val btnMoodCoffee = view.findViewById<Button>(R.id.btnMoodCoffee)
+        btnMoodCoffee.setOnClickListener {
+            findNavController().navigate(R.id.navigation_mood)
+        }
+
         observeViewModel()
 
         return view
     }
 
     private fun observeViewModel() {
-        coffeeViewModel.allCoffees.observe(viewLifecycleOwner) { coffees ->
-            // For now we just observe to respect MVVM
-            // Later this can be connected to RecyclerView
+        coffeeViewModel.allCoffees.observe(viewLifecycleOwner) {
         }
     }
 }
