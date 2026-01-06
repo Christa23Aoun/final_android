@@ -15,6 +15,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HugYourMug">
 
+        <!-- ✅ GOOGLE MAPS API KEY -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
         <activity
             android:name=".ui.auth.WelcomeActivity"
             android:exported="true">
